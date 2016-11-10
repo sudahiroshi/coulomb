@@ -44,6 +44,7 @@ class coulomb {
   // クーロン力を元に1次方程式を求めるメソッド
   get_formula( a, b ) {
     var f = this.calc_coulomb( a, b );
+    // slopeは傾き，interceptは切片
     var slope, intercept;
     if( a.y == b.y ) {
       slope = 0;
@@ -53,7 +54,7 @@ class coulomb {
       intercept = 0;
     } else {
       slope = ( a.y - b.y ) / ( a.x - b.x );
-      intercept = b.y - ( slope * a.y );
+      intercept = b.y - ( slope * b.x ); //bで揃えた
     }
     return [ f, slope, intercept ];
   }
@@ -102,10 +103,25 @@ class charge {
 // お試し用のメソッド．
 // JavaScriptコンソールから「test1()」と入力すると以下のプログラムで示された座標に点電荷を置き，クーロン力をコンソールに表示する
 // ちなみにnew chargeの引数は，順番にX座標，Y座標，電荷を示す
+function test1(x0,x1,y0,y1,x2,y2) {
+  var x = new coulomb();
+  x.add( new charge( x0, y0, 1 ) );
+  x.add( new charge( x1, y1, 1 ) );
+  x.add( new charge( x2, y2, 1 ) );
+  var r = x.calc();
+  return r;
+}
+
+/*
 function test1() {
   var x = new coulomb();
   x.add( new charge( 100, 50, 1 ) );
   x.add( new charge( 50, 100, 1 ) );
   x.add( new charge( 50, 50, 1 ) );
-  console.log( x.calc() );
+  var r = x.calc();
+  console.log( r );
+  console.log( r[0][2] );
+  console.log( r[1] );
+  console.log( r[2] );
 }
+*/
